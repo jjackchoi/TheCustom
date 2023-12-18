@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.customEdu.board.BoardMapper">
+
+    <!--general_board 테이블 전체 컬럼-->
+    <sql id="boardColumns">
+          board_seq
+        , board_title
+        , board_text
+        , board_writer
+        , board_reg_date
+        , board_mod_date
+        , board_img_path
+        , board_del_yn
+    </sql>
+
+    <!--게시글 저장-->
+    <insert id="save" parameterType="com.customEdu.board.BoardRequest">
+        INSERT INTO general_board(
+            <include refid="boardColumns" />
+        ) VALUES (
+              #{boardSeq}
+            , #{boardTitle}
+            , #{boardText}
+            , #{boardWriter}
+            , NOW()
+            , NULL
+            , NULL
+            , 0
+        )
+    </insert>
+
+    <!--게시글 상세정보 조회-->
+    <select id="findBySeq" parameterType="long" resultType="com.customEdu.board.BoardResponse">
+        SELECT
+            <include refid="boardColumns" />
+        FROM
+            general_board
+        WHERE
+            board_seq = #{value}
+    </select>
+
+    <!--게시글 업데이트-->
+    <update id="update" parameterType="com.customEdu.board.BoardRequest">
+        UPDATE general_board
+        SET
+              board_mod_date = now()
+            , board_title = #{boardTitle}
+            , board_text = #{boardText}
+            , board_writer = #{boardWriter}
+        WHERE
+            board_seq = #{boardSeq}
+    </update>
+
+    <update id="delete" parameterType="long">
+        UPDATE general_board
+        SET
+            board_del_yn = 1
+        WHERE
+            board_seq = #{value}
+    </update>
+
+    <!--게시글 리스트 조회-->
+    <select id="findAll" resultType="com.customEdu.board.BoardResponse">
+        SELECT
+            <include refid="boardColumns" />
+        FROM
+            general_board
+        WHERE
+            board_del_yn = 0
+        ORDER BY
+            board_seq DESC
+    </select>
+</mapper>
