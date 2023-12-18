@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/basic">
+<th:block layout:fragment="title">
+    <title>THE CUSTOM</title>
+</th:block>
+<th:block layout:fragment="content">
+    <h2>Hello The Custom World</h2>
+    <span th:text="${t}">여기는 제목입니다.</span>
+    <span th:text="${c}">여기는 내용입니다.</span>
+    <span>[[ ${w} ]]</span>
+</th:block>
+<th:block layout:fragment="script"></th:block>
+</html>

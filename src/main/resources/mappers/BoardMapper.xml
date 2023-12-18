@@ -16,7 +16,7 @@
     </sql>
 
     <!--게시글 저장-->
-    <insert id="save" parameterType="com.customEdu.board.BoardRequest">
+    <insert id="save" parameterType="com.customEdu.board.BoardRequest" useGeneratedKeys="true" keyProperty="boardSeq">
         INSERT INTO general_board(
             <include refid="boardColumns" />
         ) VALUES (
