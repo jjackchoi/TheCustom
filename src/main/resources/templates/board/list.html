@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/basic">
+<th:block layout:fragment="title">
+    <title>THE CUSTOM</title>
+</th:block>
+<th:block layout:fragment="content">
+    <div class="main-content">
+        <div class="container-fluid">
+            <!-- TABLE STRIPED -->
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Board List</h3>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>선택</th>
+                                <th>번호</th>
+                                <th>제목</th>
+                                <th>작성자</th>
+                                <th>등록일</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:if="${not #lists.isEmpty( boards )}" th:each="row, status : ${boards}">
+                                <td><input type="checkbox"/></td>
+                                <td th:text="${status.size - status.index}"></td>
+                                <td><a th:href="@{/board/view.do( boardSeq=${row.boardSeq} )}" th:text="${row.boardTitle}"></a></td>
+                                <td th:text="${row.boardWriter}">Jobs</td>
+                                <td th:text="${#temporals.format( row.boardRegDate, 'yyyy-MM-dd HH:mm' )}"></td>
+                            </tr>
+
+                            <tr th:unless="${not #lists.isEmpty( boards )}">
+                                <td colspan="5">
+                                    <div>검색된 결과가 없습니다.</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!--/* 페이지네이션 */-->
+                <div class="panel-footer">
+                    <a href="#">첫 페이지</a><a href="#">이전 페이지 그룹</a>
+                    <p><span class="on">1</span><a href="#">2</a><a href="#">3</a><a href="#">4</a><a href="#">5</a><a href="#">6</a><a href="#">7</a><a href="#">8</a><a href="#">9</a><a href="#">10</a></p>
+                    <a href="#">다음 페이지 그룹</a><a href="#">마지막 페이지</a>
+                </div>
+            </div>
+            <!-- END TABLE STRIPED -->
+        </div>
+    </div>
+</th:block>
+<th:block layout:fragment="script"></th:block>
+</html>
