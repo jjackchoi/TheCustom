@@ -9,8 +9,19 @@
             <!-- TABLE STRIPED -->
             <div class="panel">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Board List</h3>
+                    <h2 class="panel-title">Board List</h2>
                 </div>
+                <div class="panel-body">
+                    <form id="searchForm" onsubmit="return false;" autocomplete="off" style="width: 500px; float: left;">
+                        <div class="input-group">
+                            <input type="text" value="" class="form-control" placeholder="키워드를 입력해주세요">
+                            <span class="input-group-btn"><button type="button" class="btn btn-primary">검색</button></span>
+                        </div>
+                    </form>
+                    <button type="button" class="btn btn-primary" style="float: right; margin: 0px 2px;">글쓰기</button>
+                    <button type="button" class="btn btn-primary" style="float: right; margin: 0px 2px;">삭제</button>
+                </div>
+
                 <div class="panel-body">
                     <table class="table table-striped">
                         <thead>
@@ -40,10 +51,14 @@
                     </table>
                 </div>
                 <!--/* 페이지네이션 */-->
-                <div class="panel-footer">
-                    <a href="#">첫 페이지</a><a href="#">이전 페이지 그룹</a>
-                    <p><span class="on">1</span><a href="#">2</a><a href="#">3</a><a href="#">4</a><a href="#">5</a><a href="#">6</a><a href="#">7</a><a href="#">8</a><a href="#">9</a><a href="#">10</a></p>
-                    <a href="#">다음 페이지 그룹</a><a href="#">마지막 페이지</a>
+                <div class="panel-body" style="text-align: center; font-size: 20px;">
+                    <span class="btn btn-primary btn-sm"><a href="#" style="color: white;">첫 페이지</a></span>
+                    <span class="btn btn-primary btn-sm"><a href="#" style="color: white;">이전 페이지</a></span>
+                    <span class="on" style="margin: 0px 2px;">1</span><a href="#" style="margin: 0px 2px;">2</a><a href="#" style="margin: 0px 2px;">3</a>
+                    <a href="#" style="margin: 0px 2px;">4</a><a href="#" style="margin: 0px 2px;">5</a><a href="#" style="margin: 0px 2px;">6</a>
+                    <a href="#" style="margin: 0px 2px;">7</a><a href="#" style="margin: 0px 2px;">8</a><a href="#" style="margin: 0px 2px;">9</a><a href="#" style="margin: 0px 2px;">10</a>
+                    <span class="btn btn-primary btn-sm"><a href="#" style="color: white;">다음 페이지</a></span>
+                    <span class="btn btn-primary btn-sm"><a href="#" style="color: white;">마지막 페이지</a></span>
                 </div>
             </div>
             <!-- END TABLE STRIPED -->
