@@ -10,21 +10,59 @@
         <h2>RegBoard</h2>
       </div>
       <div class="panel-body">
-        <h3>제목</h3>
-        <input type="text" class="form-control" placeholder="제목을 입력해주세요"><br>
-        <h3>작성자</h3>
-        <input type="text" class="form-control" placeholder="이름을 입력해주세요"><br>
-        <h3>내용</h3>
-        <textarea class="form-control" placeholder="내용을 입력해주세요" rows="6"></textarea>
-        <br>
-        <h3>파일</h3>
-        <input type="file" id="boardFile" th:name="boardImgPath">
-      </div>
-      <div class="panel-footer">
-        
+        <section>
+          <form id="saveForm" method="post" autocomplete="off">
+            <!--게시글 수정인 경우, 서버로 전달할 게시글 번호 (PK)-->
+            <input type="hidden" id="boardSeq" name="boardSeq" th:if="${board != null}" th:value="${board.boardSeq}">
+            <!--등록일-->
+            <input type="hidden" id="boardRegDate" name="boardRegDate" readonly />
+            <h3>제목</h3>
+            <input type="text" class="form-control" name="boardTitle" id="boardTitle" placeholder="제목을 입력해주세요"><br>
+            <h3>작성자</h3>
+            <input type="text" class="form-control" name="boardWriter" id="boardWriter" placeholder="이름을 입력해주세요"><br>
+            <h3>내용</h3>
+            <textarea class="form-control" name="boardText" id="boardText" placeholder="내용을 입력해주세요" rows="6"></textarea><br>
+            <h3>파일</h3>
+            <input type="file" name="boardImgPath" id="boardImgPath"><br>
+          </form>
+          <p style="text-align: center;">
+            <button type="button" id="saveBtn" onclick="savePost();" class="btn btn-primary">저장</button>
+            <button type="button" class="btn btn-default"><a th:href="@{/}">목록</a></button>
+          </p>
+        </section>
       </div>
     </div>
   </div>
 </th:block>
-<th:block layout:fragment="script"></th:block>
+<th:block layout:fragment="script">
+  <script th:inline="javascript">
+    /*<![CDATA[*/
+
+      window.onload = () => {
+        initCreatedDate();
+      }
+
+      // 등록일 초기화
+      function initCreatedDate(){
+        document.getElementById('boardRegDate').value = dayjs().format('YYYY-MM-DD');
+      }
+
+      // 게시글 저장(수정)
+      function savePost(){
+        const form = document.getElementById('saveForm');
+        const fields = [form.boardTitle, form.boardWriter, form.boardText];
+        const fieldNames = ['제목', '작성자', '내용'];
+
+        for (let i = 0; i < fields.length; i++){
+          isValid(fields[i], fieldNames[i]);
+        }
+
+        document.getElementById('saveBtn').disabled = true;
+        form.action = [[ ${board == null} ]] ? '/board/save.do' : '/board/update.do';
+        form.submit();
+      }
+
+    /*]]>*/
+  </script>
+</th:block>
 </html>
