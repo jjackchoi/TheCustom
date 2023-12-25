@@ -23,6 +23,7 @@ public class BoardController {
         System.out.println(boards.size());
         return "board/list";
     }
+
     // 게시글 작성 페이지
     @GetMapping("/board/write.do")
     public String openBoardWrite(@RequestParam(value = "boardSeq", required = false) final Long seq, Model model){
@@ -33,9 +34,33 @@ public class BoardController {
         return "board/write";
     }
 
+
+    // 게시글 저장
     @PostMapping("/board/save.do")
     public String saveBoard(final BoardRequest params){
         boardService.saveBoard(params);
+        return "redirect:/";
+    }
+
+    // 기존 게시글 수정
+    @PostMapping("/board/update.do")
+    public String updateBoard(final BoardRequest params){
+        boardService.updateBoard(params);
+        return "redirect:/";
+    }
+
+    // 게시글 상세 페이지
+    @GetMapping("/board/view.do")
+    public String viewBoard(final Long boardSeq, Model model){
+        BoardResponse board = boardService.findBoardById(boardSeq);
+        model.addAttribute("board", board);
+        return "board/view";
+    }
+
+    // 게시글 삭제
+    @PostMapping("/board/delete.do")
+    public String deleteBoard(final Long boardSeq){
+        boardService.deleteBoard(boardSeq);
         return "redirect:/";
     }
 }

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/basic">
+<th:block layout:fragment="title">
+    <title>THE CUSTOM 상세페이지</title>
+</th:block>
+<th:block layout:fragment="content">
+    <div class="main-content">
+        <div class="panel">
+            <div class="panel-heading">
+                <h2>RegBoard</h2>
+            </div>
+            <div class="panel-body">
+                <section>
+                    <h3>등록일</h3>
+                    <p class="text-info" th:text="${#temporals.format( board.boardRegDate, 'yyyy-MM-dd HH:mm' )}"></p>
+                    <h3>제목</h3>
+                    <p class="text-info" th:text="${ board.boardTitle }"></p>
+                    <h3>작성자</h3>
+                    <p class="text-info" th:text="${ board.boardWriter }"></p>
+                    <h3>내용</h3>
+                    <p class="text-info" th:text="${ board.boardText }"></p>
+                    <h3>파일</h3>
+                    <p class="text-info" th:text="${ board.boardImgPath == null ? '이미지 없음' : board.boardImgPath }"></p>
+                    <p style="text-align: center;">
+                        <button type="button" class="btn btn-primary"><a style="color: white;" th:href="@{/board/write.do( boardSeq=${board.boardSeq} )}">수정</a></button>
+                        <button type="button" class="btn btn-default"><a th:href="@{/}">목록</a></button>
+                        <button type="button" id="deleteBtn" class="btn btn-danger" onclick="deleteBoard();">삭제</button>
+                    </p>
+                </section>
+            </div>
+        </div>
+    </div>
+</th:block>
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+
+            // 게시글 삭제(자바스크립트로 html을 동적으로 구현)
+            function deleteBoard(){
+                const boardSeq = [[ ${board.boardSeq} ]];
+
+                if( !confirm(boardSeq + '번 게시글을 삭제할까요?') ){
+                    return false;
+                }
+
+                const formHtml = `
+                    <form action="/board/delete.do" id="deleteForm" method="post">
+                        <input type="hidden" id="boardSeq" name="boardSeq" value="${boardSeq}" />
+                    </form>
+                `;
+                const doc = new DOMParser().parseFromString(formHtml, 'text/html');
+                const form = doc.body.firstChild;
+                document.body.append(form);
+                document.getElementById('deleteForm').submit();
+            }
+            
+        /*]]>*/
+    </script>
+</th:block>
+</html>

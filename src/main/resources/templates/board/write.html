@@ -39,7 +39,24 @@
     /*<![CDATA[*/
 
       window.onload = () => {
-        initCreatedDate();
+        renderBoardInfo();
+      }
+
+      // 게시글 상세정보 렌더링(상세 페이지에서 수정을 누르면 해당 seq의 게시글 정보가 수정페이지에서 보여져야 함 )
+      function renderBoardInfo() {
+        const board = [[ ${board} ]];
+
+        if( !board ){
+          initCreatedDate();
+          return false;
+        }
+
+        const form = document.getElementById('saveForm');
+        const fields = ['boardSeq', 'boardTitle', 'boardWriter', 'boardText', 'boardImgPath'];
+
+        fields.forEach(field => {
+          form[field].value = board[field];
+        })
       }
 
       // 등록일 초기화

@@ -53,6 +53,7 @@
             board_seq = #{boardSeq}
     </update>
 
+    <!--게시글 삭제-->
     <update id="delete" parameterType="long">
         UPDATE general_board
         SET
