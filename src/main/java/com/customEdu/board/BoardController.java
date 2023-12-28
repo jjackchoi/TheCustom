@@ -63,4 +63,8 @@ public class BoardController {
         boardService.deleteBoard(boardSeq);
         return "redirect:/";
     }
+
+    // 게시글 다중 삭제
+    /*@PostMapping("/board/multiDelete.do")
+    public String*/
 }

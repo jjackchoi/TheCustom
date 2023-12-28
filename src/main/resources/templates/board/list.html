@@ -18,15 +18,24 @@
                             <span class="input-group-btn"><button type="button" class="btn btn-primary">검색</button></span>
                         </div>
                     </form>
-                    <button type="button" class="btn btn-primary" style="float: right; margin: 0px 2px;"><a th:href="@{/board/write.do}" style="color: white;">글쓰기</a></button>
-                    <button type="button" class="btn btn-primary" style="float: right; margin: 0px 2px;"><a th:href="@{/board/delete.do}" style="color: white;">삭제</a></button>
+                    <button type="button" class="btn btn-primary" style="float: right; margin: 0px 2px;">
+                        <a th:href="@{/board/write.do}" style="color: white;">글쓰기</a>
+                    </button>
+                    <button type="button" class="btn btn-primary" style="float: right; margin: 0px 2px;" onclick="deleteValue();">
+                        <a th:href="@{/board/multiDelete.do}" style="color: white;">선택삭제</a>
+                    </button>
                 </div>
 
                 <div class="panel-body">
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th>선택</th>
+                                <th>
+                                    <label class="fancy-checkbox">
+                                        <input type="checkbox" id="allCheckBox" >
+                                        <span></span>
+                                    </label>
+                                </th>
                                 <th>번호</th>
                                 <th>제목</th>
                                 <th>작성자</th>
@@ -35,7 +44,7 @@
                         </thead>
                         <tbody>
                             <tr th:if="${not #lists.isEmpty( boards )}" th:each="row, status : ${boards}">
-                                <td><input type="checkbox"/></td>
+                                <td><label class="fancy-checkbox"><input type="checkbox" id="rowCheck" name="rowCheck" th:value="${row.boardSeq}" ><span></span></label></td>
                                 <td th:text="${status.size - status.index}"></td>
                                 <td><a th:href="@{/board/view.do( boardSeq=${row.boardSeq} )}" th:text="${row.boardTitle}"></a></td>
                                 <td th:text="${row.boardWriter}">Jobs</td>
@@ -65,5 +74,35 @@
         </div>
     </div>
 </th:block>
-<th:block layout:fragment="script"></th:block>
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+
+            // 전체 선택 체크박스 가져오기
+            const allChkBox = document.querySelector("#allCheckBox");
+
+            // 체크박스 전체 선택 클릭 이벤트
+            allChkBox.addEventListener("click", e => {
+
+                // 전체 체크박스 버튼 체크 여부
+                console.log(`check - before confirm() checked value : ${allChkBox.checked}`);
+
+                // 자식 체크박스들 가져오기 (NodeList)
+                const checkboxes = document.querySelectorAll('input[name="rowCheck"]');
+
+                // 전체 선택 체크박스 체크여부에 따른 자식 체크박스 체크로직
+                if(allChkBox.checked){
+                    checkboxes.forEach((checkbox) => {
+                        checkbox.checked = true;
+                    });
+                } else{
+                    checkboxes.forEach((checkbox) => {
+                        checkbox.checked = false;
+                    });
+                };
+            });
+
+        /*]]>*/
+    </script>
+</th:block>
 </html>
