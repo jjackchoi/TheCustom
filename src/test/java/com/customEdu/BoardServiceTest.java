@@ -61,4 +61,12 @@ public class BoardServiceTest {
         boardService.deleteBoard(6L);
         System.out.println("지운 후 갯수 = " + boardService.findAllBoard().size());
     }
+
+    @Test
+    void mulDel(){
+        System.out.println("지우기 전 갯수 = " + boardService.findAllBoard().size());
+        Long[] seqs = {1L, 2L};
+        boardService.mulDelBoard(seqs);
+        System.out.println("지운 후 갯수 = " + boardService.findAllBoard().size());
+    }
 }

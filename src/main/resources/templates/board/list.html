@@ -21,8 +21,9 @@
                     <button type="button" class="btn btn-primary" style="float: right; margin: 0px 2px;">
                         <a th:href="@{/board/write.do}" style="color: white;">글쓰기</a>
                     </button>
-                    <button type="button" class="btn btn-primary" style="float: right; margin: 0px 2px;" onclick="deleteValue();">
-                        <a th:href="@{/board/multiDelete.do}" style="color: white;">선택삭제</a>
+                    <button type="button" class="btn btn-primary" style="float: right; margin: 0px 2px;">
+<!--                        <a th:href="@{/board/multiDelete.do}" style="color: white;" id="deleteBtn">선택삭제</a>-->
+                        <a style="color: white;" id="deleteBtn">선택삭제</a>
                     </button>
                 </div>
 
@@ -100,6 +101,44 @@
                         checkbox.checked = false;
                     });
                 };
+            });
+
+            // 선택 삭제
+            const deleteBtn = document.querySelector("#deleteBtn");
+
+            deleteBtn.addEventListener("click", e => {
+
+                const checked = document.querySelectorAll('input[name="rowCheck"]:checked');
+                console.log(checked.length);
+
+                if(checked.length < 1){
+                    alert('삭제할 게시글을 체크해주세요.');
+                    return false;
+                }
+
+                const seqList = [];
+
+                checked.forEach((check) => {
+                    seqList.push(check.value);
+                });
+
+                console.log(seqList);
+
+                if(!confirm('선택한 게시글을 삭제할까요?')){
+                    return false;
+                };
+
+                const formHtml = `
+                    <form action="/board/multiDelete.do" id="deleteForm" method="post">
+                        <input type="hidden" id="seqList" name="seqList" value="${seqList}" />
+                    </form>
+                `;
+                const doc = new DOMParser().parseFromString(formHtml, 'text/html');
+                const form = doc.body.firstChild;
+                document.body.append(form);
+                document.getElementById('deleteForm').submit();
+
+                alert(`게시글이 삭제되었습니다.`);
             });
 
         /*]]>*/

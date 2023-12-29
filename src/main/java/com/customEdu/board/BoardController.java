@@ -65,6 +65,9 @@ public class BoardController {
     }
 
     // 게시글 다중 삭제
-    /*@PostMapping("/board/multiDelete.do")
-    public String*/
+    @PostMapping("/board/multiDelete.do")
+    public String multiDelBoard(final Long[] seqList){
+        boardService.mulDelBoard(seqList);
+        return "redirect:/";
+    }
 }
