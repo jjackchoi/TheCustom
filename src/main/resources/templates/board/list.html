@@ -43,7 +43,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:if="${not #lists.isEmpty( boards )}" th:each="row, status : ${boards}">
+                            <tr th:if="${not #lists.isEmpty( board )}" th:each="row, status : ${board}">
                                 <td><label class="fancy-checkbox"><input type="checkbox" id="rowCheck" name="rowCheck" th:value="${row.boardSeq}" ><span></span></label></td>
                                 <td th:text="${status.size - status.index}"></td>
                                 <td><a th:href="@{/board/view.do( boardSeq=${row.boardSeq} )}" th:text="${row.boardTitle}"></a></td>

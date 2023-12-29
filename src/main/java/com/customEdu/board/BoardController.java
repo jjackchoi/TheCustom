@@ -18,9 +18,9 @@ public class BoardController {
     // 게시글 리스트 페이지
     @GetMapping("/")
     public String openBoardList(Model model){
-        List<BoardResponse> boards = boardService.findAllBoard();
-        model.addAttribute("boards", boards);
-        System.out.println(boards.size());
+        List<BoardResponse> board = boardService.findAllBoard();
+        model.addAttribute("board", board);
+        System.out.println(board.size());
         return "board/list";
     }
 
@@ -69,5 +69,21 @@ public class BoardController {
     public String multiDelBoard(final Long[] seqList){
         boardService.mulDelBoard(seqList);
         return "redirect:/";
+    }
+
+    // jqGrid 페이지
+    @GetMapping("/jqGrid.do")
+    public String openJqGrid(Model model){
+        String jqGrid = "jqGrid";
+        model.addAttribute("jqGrid", jqGrid);
+        return "jqGrid/jqGrid";
+    }
+
+    // api 페이지
+    @GetMapping("/api.do")
+    public String openApi(Model model){
+        String api = "api";
+        model.addAttribute("api", api);
+        return "api/api";
     }
 }
